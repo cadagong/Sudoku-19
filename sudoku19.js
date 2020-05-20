@@ -17,10 +17,9 @@ let targetLocation = null;
 //Box class 
 //abstract data type to represent html box elements
 class Box {
-    constructor(pId, pHouse, pLeftPos, pTopPos) {        
+    constructor(pId, pLeftPos, pTopPos) {        
         this.id = pId;        
-        this.class = 'box';        
-        this.house = pHouse;
+        this.class = 'box';                
         this.leftPos = pLeftPos;
         this.topPos = pTopPos; 
         this.img = getRandomImage();   
@@ -28,7 +27,7 @@ class Box {
     
     //generate new html box elements from the attributes of this box instance
     generateElement() {
-        let parentElement = document.getElementById('house-' + this.house);
+        let parentElement = document.getElementById('house-container');
 
         let newBox = document.createElement('div');
         newBox.className = this.class;
@@ -83,18 +82,29 @@ class Box {
 //dynamically create all boxes
 //this will display all boxes on screen, but they will not necessarily be "filled" with images
 
-for (let i=1; i<=3; i++) { //for each house
-    for (let j=1; j<=6; j++) { //for each row
-        for (let k=1; k<=3; k++) { //for each column
-            let aId = 'house' + i + 'row' + j + 'column' + k;  
-            let leftPos = 2.5+(12*(k-1));
-            let topPos = 1.5+(12*(j-1));      
-            let box = new Box( aId, i, leftPos, topPos);
-            boxDictionary[aId] = box;            
-            box.generateElement();
+
+
+for (let i=1; i<=6; i++) { //for each row  
+    let bufferSpaceFromLeft = 2.5      
+    for (let j=1; j<=9; j++) { //for each column
+        let aId = 'row' + i + 'column' + j; 
+        let leftPos;
+        let topPos;        
+
+        if (j==4 || j==7) {
+            bufferSpaceFromLeft += 4.5;     
         }
+        
+        leftPos = bufferSpaceFromLeft + (12*(j-1));
+        topPos = 1.5 + (12*(i-1));      
+        
+
+        let box = new Box( aId, leftPos, topPos);
+        boxDictionary[aId] = box;            
+        box.generateElement();
     }
 }
+
 
 console.log(boxDictionary);
 
@@ -114,12 +124,7 @@ function getRandomImage() {
     let img = document.createElement('img');    
     img.src = 'images/' + images[imagePos];
     img.style.maxHeight = '10vmin';
-    img.style.maxWidth = '10vmin';
-    if (img!='images/') {
-        return img;
-    }
-    else {
-        return null
-    }
+    img.style.maxWidth = '10vmin';    
+    return img;
 }
 
