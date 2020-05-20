@@ -49,21 +49,23 @@ class Box {
         //1- target box 
         //2- box you want to move (to position of target box)
         newBox.onclick = function(e) {
-            if (startLocation == null) {
-                startLocation = boxDictionary[newBox.id];
-                newBox.style.border = '3px solid yellow';
+            if (startLocation == null) {                
+                startLocation = newBox;
+                newBox.style.border = '2px solid blue';
             }
-            else {                
-                let targetLocation = boxDictionary[newBox.id];
-                let tempImg = targetLocation.img;
-                targetLocation.img = startLocation.img;
-                startLocation.img = tempImg; 
-                
-                document.getElementById(startLocation.id).remove();
-                document.getElementById(targetLocation.id).remove();
+            else {                                   
+                targetLocation = newBox;                
+                startLocation.style.border = '2px solid black';
 
-                startLocation.generateElement();
-                targetLocation.generateElement();
+                let startLeft = startLocation.style.left;
+                let startTop = startLocation.style.top;
+                let targetLeft = targetLocation.style.left;
+                let targetTop = targetLocation.style.top;
+
+                startLocation.style.left = targetLeft;
+                startLocation.style.top = targetTop;                
+                targetLocation.style.left = startLeft;
+                targetLocation.style.top = startTop;
 
                 startLocation = null;
                 targetLocation = null;
@@ -94,7 +96,7 @@ for (let i=1; i<=3; i++) { //for each house
     }
 }
 
-console.log(boxDictionary['house1row1column1']);
+console.log(boxDictionary);
 
 
 ///////////////////

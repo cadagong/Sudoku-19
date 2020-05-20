@@ -7,7 +7,7 @@
 }
 #roof {
     position: absolute;
-    left: 41.7vmin;    
+    left: 42.7vmin;    
     width: 125vmin;
     max-height: 14vmin;
 }
@@ -40,10 +40,10 @@
 }
 .box {
     position: absolute;
-    border: 1px solid black;
+    border: 2px solid black;
     width: 10vmin;
     height: 10vmin;
     cursor: pointer;
     transition: 0.2s;
-    border-radius: 0.3vmin;
+    border-radius: 0.5vmin;
 }
