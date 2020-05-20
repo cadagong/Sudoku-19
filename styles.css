@@ -1,0 +1,49 @@
+#title {
+    position: absolute;
+    left: 95vmin;
+    top: 6vmin;
+    z-index: 1;
+    font-size: xx-large;
+}
+#roof {
+    position: absolute;
+    left: 41.7vmin;    
+    width: 125vmin;
+    max-height: 14vmin;
+}
+#house-container {
+    position: absolute;
+    left: 45vmin;
+    top: 15vmin;
+    width: 120vmin;
+    height: 80vmin;    
+    /*border: 2px solid rgb(26, 90, 26);*/
+}
+.house {
+    position: absolute;
+    width: 33.33%;
+    height: 100%;    
+    border: 2px solid black;
+}
+#house-1 {    
+    left: 0vmin;
+    border-right: 3px solid black;  
+}
+#house-2 {    
+    left: 40vmin;
+    border-right: 3px solid black;
+    border-left: 3px solid black;
+}
+#house-3 {    
+    left: 80vmin;
+    border-left: 3px solid black;
+}
+.box {
+    position: absolute;
+    border: 1px solid black;
+    width: 10vmin;
+    height: 10vmin;
+    cursor: pointer;
+    transition: 0.2s;
+    border-radius: 0.3vmin;
+}
