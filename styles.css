@@ -1,3 +1,7 @@
+img {
+    position: absolute;
+    align-content: center;
+}
 #title {
     position: absolute;
     left: 95vmin;
@@ -40,10 +44,11 @@
 }
 .box {
     position: absolute;
-    border: 2px solid black;
+    border: 3px solid black;
     width: 10vmin;
     height: 10vmin;
     cursor: pointer;
     transition: 0.2s;
-    border-radius: 0.5vmin;    
+    border-radius: 0.5vmin;  
+    vertical-align: middle;              
 }
