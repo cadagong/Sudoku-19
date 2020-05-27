@@ -1,6 +1,7 @@
 img {
-    position: absolute;
-    align-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
 }
 #title {
     position: absolute;
@@ -20,8 +21,7 @@ img {
     left: 45vmin;
     top: 15vmin;
     width: 120vmin;
-    height: 80vmin;    
-    /*border: 2px solid rgb(26, 90, 26);*/
+    height: 80vmin;        
 }
 .house {
     position: absolute;
