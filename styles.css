@@ -21,13 +21,15 @@ img {
     left: 45vmin;
     top: 15vmin;
     width: 120vmin;
-    height: 80vmin;        
+    height: 80vmin;  
+    z-index: 0;    
 }
 .house {
     position: absolute;
     width: 33.33%;
     height: 100%;    
     border: 2px solid black;
+    z-index: 0;
 }
 #house-1 {    
     left: 0vmin;
@@ -45,10 +47,11 @@ img {
 .box {
     position: absolute;
     border: 3px solid black;
-    width: 10vmin;
-    height: 10vmin;
+    width: 60px;
+    height: 60px;      
     cursor: pointer;
-    transition: 0.2s;
+    transition: 0.1s;
     border-radius: 0.5vmin;  
-    vertical-align: middle;              
+    vertical-align: middle;  
+    z-index: 1;            
 }
