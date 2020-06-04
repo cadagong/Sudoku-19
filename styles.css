@@ -6,7 +6,7 @@ img {
 #title {
     position: absolute;
     left: 95vmin;
-    top: 6vmin;
+    top: 5vmin;
     z-index: 1;
     font-size: xx-large;
 }
@@ -19,7 +19,7 @@ img {
 #house-container {
     position: absolute;
     left: 45vmin;
-    top: 15vmin;
+    top: 13vmin;
     width: 120vmin;
     height: 80vmin;  
     z-index: 0;    
@@ -28,12 +28,13 @@ img {
     position: absolute;
     width: 33.33%;
     height: 100%;    
-    border: 2px solid black;
+    border: 3px solid black;    
     z-index: 0;
 }
 #house-1 {    
     left: 0vmin;
     border-right: 3px solid black;  
+    border-radius: 0.3em 0em 0em 0.3em;
 }
 #house-2 {    
     left: 40vmin;
@@ -43,12 +44,13 @@ img {
 #house-3 {    
     left: 80vmin;
     border-left: 3px solid black;
+    border-radius: 0em 0.3em 0.3em 0em;
 }
 .box {
     position: absolute;
     border: 3px solid black;
-    width: 60px;
-    height: 60px;      
+    width: 3.8em;
+    height: 3.8em;      
     cursor: pointer;
     transition: 0.1s;
     border-radius: 0.5vmin;  

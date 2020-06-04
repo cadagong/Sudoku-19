@@ -22,6 +22,8 @@ const boxTypes = ['neutral', 'neutral', 'neutral', 'human', 'human', 'human', 'i
 //key - Id
 //value - box/img associated with Id
 let boxDictionary = {};
+//array containing all box elements
+let boxElementArray = [];
 
 //start location is the box you selected to move
 //target location is the location of the box you want to move to
@@ -29,7 +31,10 @@ let startLocation = null;
 let targetLocation = null;
 
 
-//Box class 
+//////////////////////
+//Box Class Definition
+//////////////////////
+
 //abstract data type to represent html box elements
 class Box {
     constructor(pId, pLeftPos, pTopPos) {        
@@ -56,18 +61,20 @@ class Box {
 
     //update the html element corresponding to its box instance
     updateElement() {        
+        this.element.id = this.id;
+        console.log(this.element.id);
         this.element.style.backgroundColor = this.getBoxBackground();
         this.element.style.left = "" + this.leftPos + 'px';
         this.element.style.top = '' + this.topPos + 'px'; 
         this.element.style.border = '3px solid black';   
         this.element.style.zIndex = '1';   
     }
-
     
     //generate new html box elements from the attributes of this box instance
     generateElement() {        
         //create new box element
         let newBox = document.createElement('div');
+        boxElementArray.push(newBox); //add to array of elements
         //set newBox properties
         newBox.className = this.class;
         newBox.id = this.id;
@@ -78,15 +85,18 @@ class Box {
         newBox.style.backgroundSize = 'contain';   
         newBox.style.backgroundRepeat = 'no-repeat';   
         
-        //insert image into box                       
-        //set up events for box
+
+        ///////////////////////////////////
+        //Event defnitions for box elements
+        ///////////////////////////////////
+                                      
         newBox.onmouseover = function(e) {          
            newBox.style.borderWidth = '3.5px';
         }
+
         newBox.onmouseout = function(e) {           
            newBox.style.borderWidth = '3px';
         }
-
 
         //when nox is clicked, it can be either
         //1- target box 
@@ -105,10 +115,7 @@ class Box {
                 //box types will determine the interaction
                 let startBoxObject = boxDictionary[startLocation.id];
                 let targetBoxObject = boxDictionary[targetLocation.id];
-                let startType = startBoxObject.type;
-                let targetType = targetBoxObject.type;
-
-                 
+                                 
                 let startLeft = startBoxObject.leftPos;
                 let startTop = startBoxObject.topPos;
                 let targetLeft = targetBoxObject.leftPos;
@@ -119,7 +126,7 @@ class Box {
                 let x_distance = Math.abs(targetLeft - startLeft);
                 let y_distance = Math.abs(targetTop - startTop);
                 console.log(x_distance);
-                console.log(y_distance);
+                console.log(y_distance);                
 
                 //determine if boxes are adjacent based on distance between them
                 if((x_distance <= 105 && y_distance == 0) || (x_distance == 0 && y_distance <= 75)) {
@@ -136,6 +143,8 @@ class Box {
                                                                                         
 
                     //special - infector interaction
+                    let startType = startBoxObject.type;
+                    let targetType = targetBoxObject.type;
                     if((startType=='special' && targetType=='infector') || (startType=='infector' && targetType=='special')) {   
 
                         document.getElementById(startLocation.id).style.backgroundImage = 'none';                    
@@ -153,35 +162,59 @@ class Box {
                 startLocation = null;
                 targetLocation = null;             
             }
-
-
         }    
         */     
         
         //if user drags a box to a location
         newBox.onmousedown = function(e) { 
            
+            //make sure selected box is always in front
             newBox.style.zIndex = '2';
             
-
             //record starting position before dragging begins
             let offset = $('#house-container').offset();
             let startX = e.clientX - (offset.left + 25);
             let startY = e.clientY - (offset.top + 25);
             let x;
-            let y;   
+            let y;                                                           
+
+            //highlight all viable destinations for box to be dragged to  
+            newBox.style.border = '4px solid red';
+            let index = boxElementArray.indexOf(newBox);
+            console.log("index" + index);
+
+            let leftBox, rightBox, topBox, bottomBox;                                                
+            if(index%9 != 0) { //checking for edge cases
+                leftBox = boxElementArray[index-1];
+                leftBox.style.border = '4px solid red'; //left            
+            }
+            if((index+1)%9 != 0) {
+                rightBox = boxElementArray[index+1];
+                rightBox.style.border = '4px solid red'; //right                 
+            }
+            if(index > 8) {
+                topBox = boxElementArray[index-9];
+                topBox.style.border = '4px solid red'; //top    
+            }
+            if(index < 45) {
+                bottomBox = boxElementArray[index+9];   
+                bottomBox.style.border = '4px solid red'; //bottom    
+            }
             
-                                            
-
-            //highlight all viable destinations for box to be dragged to            
-
-            let leftBox;
-            /*
-            document.elementFromPoint(e.clientX - 80, e.clientY + 10).style.border = '4.5px solid red'; //left
-            document.elementFromPoint(e.clientX + 80, e.clientY + 10).style.border = '4.5px solid red'; //right
-            document.elementFromPoint(e.clientX + 10, e.clientY + 80).style.border = '4.5px solid red'; //top
-            document.elementFromPoint(e.clientX + 10, e.clientY - 80).style.border = '4.5px solid red'; //bottom 
-            */
+            //decrease opacity of all other boxes
+            for(let i=0; i<boxElementArray.length; i++) {
+                if(boxElementArray[i] != newBox) {
+                    if(boxElementArray[i] != leftBox) {
+                        if(boxElementArray[i] != rightBox) {
+                            if(boxElementArray[i] != topBox) {
+                                if(boxElementArray[i] != bottomBox) {
+                                    boxElementArray[i].style.opacity = '70%';
+                                }
+                            }
+                        }
+                    }
+                }
+            }
 
             //once user begins moving mouse
             document.getElementById('house-container').onmousemove = function(e) {
@@ -192,18 +225,19 @@ class Box {
                 $('#' + newBox.id).css("left", "" + x + "px"); 
                 $('#' + newBox.id).css("top", "" + y + "px");
             }
-            
+                        
             //once user has stopped dragging, determine correct response
             newBox.onmouseup = function(e) {   
 
-                newBox.style.border = '3px solid black'; 
-                
-                /*
-                document.elementFromPoint(e.clientX - 80, e.clientY + 10).style.border = '3px solid black'; //left
-                document.elementFromPoint(e.clientX + 80, e.clientY + 10).style.border = '3px solid black'; //right
-                document.elementFromPoint(e.clientX + 10, e.clientY + 80).style.border = '3px solid black'; //top
-                document.elementFromPoint(e.clientX + 10, e.clientY - 80).style.border = '3px solid black'; //bottom    
-                */
+                if(index%9 != 0) leftBox.style.border = '3px solid black'; //left                        
+                if((index+1)%9 != 0) rightBox.style.border = '3px solid black'; //right                                 
+                if(index > 8) topBox.style.border = '3px solid black'; //top                    
+                if(index < 45) bottomBox.style.border = '3px solid black'; //bottom                    
+                                
+                //reset opacity to original value
+                for(let i=0; i<boxElementArray.length; i++) {               
+                    boxElementArray[i].style.opacity = '100%';                  
+                }
 
                 document.getElementById('house-container').onmousemove = null;
                 //get reference to boxes at the point where user dragged original box
@@ -213,10 +247,10 @@ class Box {
                 let x_dist = Math.abs(x - startX);
                 let y_dist = Math.abs(y - startY);
 
-                //get corresponding Box objects
-                let startBoxObject = boxDictionary[newBox.id];
-                let targetBoxObject = boxDictionary[elementsFromPoint[1].id];
-
+                //get corresponding Box objects and target element               
+                let startBoxObject = boxDictionary[newBox.id];                
+                let targetElement = elementsFromPoint[1];
+                let targetBoxObject = boxDictionary[targetElement.id];                
 
                 //if requirements are met, swap original position of dragged box with box it was dragged to
                 if(( x_dist <= 105 && y_dist <= 30) || (x_dist <= 30 && y_dist <= 80)) {
@@ -233,23 +267,33 @@ class Box {
                         targetBoxObject.leftPos = startLeft;
                         targetBoxObject.topPos = startTop; 
 
-                        //swap ids of boxes      
-                        /*                                                             
-                        let startId = newBox.id;
-                        let targetId = elementsFromPoint[1].id;
-                        newBox.id = targetId;
-                        elementsFromPoint[1].id = startId;
-                        startBoxObject.id = targetId;
-                        targetBoxObject.id = startId;    
-                        */
-                                             
-                        
-                    }
-                    
-                    startBoxObject.updateElement();
-                    targetBoxObject.updateElement();                                        
+                        //swap element positions in boxElementArray
+                        let targetIndex = boxElementArray.findIndex(element => element == targetElement);
+                        let tempElement = boxElementArray[targetIndex];
+                        boxElementArray[targetIndex] = boxElementArray[index];
+                        boxElementArray[index] = tempElement;
+
+                        //special over infector interaction
+                        let startType = startBoxObject.type;                        
+                        let targetType = targetBoxObject.type;
+                        if((startType=='special' && targetType=='infector') || (startType=='infector' && targetType=='special')) {   
+
+                            document.getElementById(startBoxObject.id).style.backgroundImage = 'none';                    
+                            document.getElementById(targetBoxObject.id).style.backgroundImage = 'none';
+                            document.getElementById(startBoxObject.id).style.backgroundColor = 'white';
+                            document.getElementById(targetBoxObject.id).style.backgroundColor = 'white'; 
+
+                                                
+                            boxDictionary[startBoxObject.id].type = 'neutral';
+                            boxDictionary[targetBoxObject.id].type = 'neutral';   
+                                                                                
+                        }      
+                        targetBoxObject.updateElement();   
+                    }                    
+                    startBoxObject.updateElement();                                                           
                 }                      
-                else { //if requirements weren't met
+                else { 
+                    //if requirements weren't met
                     //simply return box to original position
                     startBoxObject.updateElement();                    
                 }                
@@ -259,6 +303,14 @@ class Box {
     }    
 }
 
+
+
+
+
+
+////////////////////////////
+//Generation of Box Elements
+////////////////////////////
 
 //dynamically generate all boxes
 let counter = 1;
@@ -273,19 +325,21 @@ for (let i=1; i<=6; i++) { //for each row
         if (j==4 || j==7) bufferSpaceFromLeft += 30;             
         
         leftPos = bufferSpaceFromLeft + (75*(j-1));
-        topPos = 10 + (75*(i-1));              
+        topPos = 25 + (75*(i-1));              
 
         let box = new Box( boxId, leftPos, topPos);                
-        boxDictionary[boxId] = box;         
-        box.generateElement();
+        boxDictionary[boxId] = box;                 
         box.printElementToScreen();
 
         counter += 1;
     }
 }
 
-
 console.log(boxDictionary);
+
+
+
+
 
 
 ///////////////////
