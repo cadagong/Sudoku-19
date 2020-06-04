@@ -5,44 +5,39 @@ img {
 }
 #title {
     position: absolute;
-    left: 95vmin;
-    top: 5vmin;
+    left: calc(50% - 2.2em);
+    top: 1em;
+    width: 4.4em;
     z-index: 1;
     font-size: xx-large;
 }
-#roof {
-    position: absolute;
-    left: 42.7vmin;    
-    width: 125vmin;
-    max-height: 14vmin;
-}
 #house-container {
     position: absolute;
-    left: 45vmin;
-    top: 13vmin;
-    width: 120vmin;
-    height: 80vmin;  
+    left: calc(50% - 23.25em);
+    top: 5em;
+    width: 31em;
+    height: 30.5em;      
     z-index: 0;    
 }
 .house {
     position: absolute;
-    width: 33.33%;
-    height: 100%;    
+    width: 15.4em;
+    height: 30.5em;    
     border: 3px solid black;    
     z-index: 0;
 }
 #house-1 {    
-    left: 0vmin;
+    left: 0em;
     border-right: 3px solid black;  
     border-radius: 0.3em 0em 0em 0.3em;
 }
 #house-2 {    
-    left: 40vmin;
+    left: 15.5em;
     border-right: 3px solid black;
     border-left: 3px solid black;
 }
 #house-3 {    
-    left: 80vmin;
+    left: 31em;
     border-left: 3px solid black;
     border-radius: 0em 0.3em 0.3em 0em;
 }

@@ -322,7 +322,7 @@ for (let i=1; i<=6; i++) { //for each row
         let leftPos;
         let topPos;        
 
-        if (j==4 || j==7) bufferSpaceFromLeft += 30;             
+        if (j==4 || j==7) bufferSpaceFromLeft += 26;             
         
         leftPos = bufferSpaceFromLeft + (75*(j-1));
         topPos = 25 + (75*(i-1));              
