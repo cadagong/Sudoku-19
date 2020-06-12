@@ -15,40 +15,91 @@ img {
     position: absolute;
     left: calc(50% - 23.25em);
     top: 5em;
-    width: 31em;
-    height: 30.5em;      
+    width: 46.6em;
+    height: 31em;      
     z-index: 0;    
+    overflow: hidden;
 }
 .house {
     position: absolute;
     width: 15.4em;
     height: 30.5em;    
-    border: 3px solid black;    
+    border: 2px solid black;    
     z-index: 0;
 }
 #house-1 {    
     left: 0em;
-    border-right: 3px solid black;  
+    border-right: 2px solid black;  
     border-radius: 0.3em 0em 0em 0.3em;
 }
 #house-2 {    
     left: 15.5em;
-    border-right: 3px solid black;
-    border-left: 3px solid black;
+    border-right: 2px solid black;
+    border-left: 2px solid black;
 }
 #house-3 {    
     left: 31em;
-    border-left: 3px solid black;
+    border-left: 2px solid black;
     border-radius: 0em 0.3em 0.3em 0em;
 }
 .box {
     position: absolute;
-    border: 3px solid black;
+    border: 2px solid black;
     width: 3.8em;
     height: 3.8em;      
     cursor: pointer;
-    transition: 0.1s;
+    transition: 0.07s;
     border-radius: 0.5vmin;  
     vertical-align: middle;  
-    z-index: 1;            
+    z-index: 2;    
+    transform: translate(-50%, -50%);        
+}
+.box:hover {
+    width: 3.9em;
+    height: 3.9em;
+}
+
+/***** 
+Pulsating green circles 
+*****/
+#circle {  
+    
+    --width: 5em;
+    --height: 5em;
+    width: var(--width);     
+    height: var(--height);
+    border-radius: 50%;
+    background-color: green;
+    position: absolute; 
+    transform: translate(-50%, -50%);
+    transition: width 0.2s, height 0.2s;
+    box-shadow: inset  0px 0px 10px  darkgreen;    
+    z-index: 1;
+}
+#pulse {
+    border: 0.2em solid darkgreen;
+    border-radius: 50%;    
+         
+    position: absolute;
+    transform: translate(-50%, -50%);
+
+    animation: progressbar 6s ease-in-out;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    z-index: 1;
+    
+    --width0: 0em;
+    --width100: 4.7em;
+    --height0: 0em;
+    --height100: 4.7em;
+}
+@keyframes progressbar {
+    from {
+    width: var(--width0);
+    height: var(--height0);    
+    }
+    to {
+    width: var(--width100);
+    height: var(--height100);        
+    } 
 }
